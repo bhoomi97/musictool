@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		musicTool
+	</title>
+	<link href='https://fonts.googleapis.com/css?family=Homemade+Apple' rel='stylesheet'>
+
+	<script type="text/javascript" src="paper-full.js"></script>
+	<script type="text/javascript" src="howler.js"></script>
+	<script type="text/javascript" src="sounds.js"></script>
+	<script type="text/paperscript" canvas="myCanvas">
+		var text = new PointText(view.center);
+		text.fillColor = 'white';
+		text.content = 'press any keys to create music';
+		text.fontSize = '22px';
+		text.fontFamily = 'Homemade Apple';
+
+		var circles = [];
+
+		//Create random circles whenever any key is pressed 'down'
+		function onKeyDown(event) {
+
+			keyData[event.key].sound.play();
+
+	        //Calculate a random point in the viewport
+	        var maxPoint = new Point(view.size.width, view.size.height);
+	        var randomPoint = Point.random();
+	        var point = maxPoint * randomPoint;
+
+	        var newCircle = new Path.Circle(point, 80);
+	        newCircle.fillColor = keyData[event.key].color ;
+	        circles.push(newCircle);
+
+	    }
+
+	    //Animations
+		function onFrame(event){
+
+			for(i=0; i<=circles.length-1; i++) {
+				circles[i].fillColor.hue +=1;
+	        	circles[i].scale(0.93);
+			};
+
+	    }
+
+	</script> 
+	<style type="text/css">
+		* {
+			margin: 0; padding: 0; box-sizing: border-box;
+		}
+		canvas {
+			height: 100%; width: 100%;
+			background: #2C3E50;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" resize>
+	</canvas>
+
+</body>
+</html>
